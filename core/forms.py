@@ -5,7 +5,7 @@ from .models import Port, System, Client
 class PortForm(forms.ModelForm):
     class Meta:
         model = Port
-        fields = ['connector', 'shutdown']
+        fields = ['connector', 'shutdown', 'status']
 
 
 class SystemForm(forms.ModelForm):

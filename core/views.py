@@ -28,12 +28,9 @@ def logoutUser(request):
 
 def index(request):
     if str(request.user) != 'AnonymousUser':
-        ports = []
-        for client in Client.objects.all():
-            ports.append(client.port_id)
         context = {
             'clients': Client.objects.all(),
-            'ports': Port.objects.exclude(id__in=ports)
+            'ports': Port.objects.filter(status=1)
         }
         return render(request, 'index.html', context)
     else:
@@ -59,6 +56,9 @@ def delete(request, obj, pk):
         elif obj == 's':
             System.objects.get(pk=pk).delete()
         elif obj == 'c':
+            port = get_object_or_404(Port, id=Client.objects.get(pk=pk).port_id)
+            port.status = 1
+            port.save()
             Client.objects.get(pk=pk).delete()
 
         return redirect('manager')
@@ -87,6 +87,9 @@ def edit(request, obj, pk):
             form = ClientForm(request.POST or None, instance=instance)
             if form.is_valid():
                 form.save()
+                port = get_object_or_404(Port, id=instance.port_id)
+                port.status = 2
+                port.save()
                 return redirect('manager')
             return render(request, 'edit-client.html', {'form': form})
     else:
@@ -119,7 +122,10 @@ def new(request, obj):
             if str(request.method) == 'POST':
                 form = ClientForm(request.POST)
                 if form.is_valid():
-                    form.save()
+                    client = form.save()
+                    port = get_object_or_404(Port, id=client.port_id)
+                    port.status = 2
+                    port.save()
                     return redirect('manager')
                 else:
                     return render(request, 'edit-client.html', {'form': ClientForm()})

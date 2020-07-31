@@ -44,8 +44,8 @@
                             {% for client in clients %}
                                 <tr>
                                     <td scope="row">{{ client.system.initials }}</td>
-                                    <td>{{ client.name|truncatechars:15 }}</td>
-                                    <td><a href="{{ client.link }}">{{ client.link|truncatechars:15 }}</a></td>
+                                    <td>{{ client.name }}</td>
+                                    <td><a href="{{ client.link }}">{{ client.link }}</a></td>
                                     <td>{{ client.port.connector }}</td>
                                     <td>{{ client.port.shutdown }}</td>
                                     <td>{{ client.version|date:"d/m/Y" }}</td>

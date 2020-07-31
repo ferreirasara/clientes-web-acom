@@ -18,8 +18,13 @@ signals.pre_save.connect(system_pre_save, sender=System)
 
 
 class Port(models.Model):
+    STATUS = (
+        (1, "Livre"),
+        (2, "Em Uso")
+    )
     connector = models.IntegerField('Connector Port')
     shutdown = models.IntegerField('Shutdown Port')
+    status = models.IntegerField('Status', choices=STATUS, default=1)
 
     def __str__(self):
         return str(self.connector) + '-' + str(self.shutdown)
