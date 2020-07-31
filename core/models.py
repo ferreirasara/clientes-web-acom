@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import signals
 
 
 class System(models.Model):
@@ -9,6 +10,13 @@ class System(models.Model):
         return '[' + str(self.initials) + ']' + ' ' + str(self.name)
 
 
+def system_pre_save(signal, instance, sender, **kwargs):
+    instance.initials = instance.initials.upper()
+
+
+signals.pre_save.connect(system_pre_save, sender=System)
+
+
 class Port(models.Model):
     connector = models.IntegerField('Connector Port')
     shutdown = models.IntegerField('Shutdown Port')
@@ -17,11 +25,13 @@ class Port(models.Model):
         return str(self.connector) + '-' + str(self.shutdown)
 
 
+
+
 class Client(models.Model):
     STATUS = (
-        ("1", "OK"),
+        ("1", "Ativo"),
         ("2", "Suspenso"),
-        ("3", "Com Problema")
+        ("3", "Com Erro")
     )
     name = models.CharField('Name', max_length=100)
     link = models.CharField('Link', max_length=100)

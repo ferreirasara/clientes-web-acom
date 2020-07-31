@@ -23,14 +23,18 @@
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
     </nav>
-    <div class="container p-2">
-        <h1><i class="fa fa-users"></i> Lista de Clientes</h1>
-        <table class="table table-sm table-hover">
+    <div class="container-fluid p-3">
+        <div class="row">
+            <div class="col-10">
+                <h4><i class="fa fa-users"></i> Lista de Clientes</h4>
+                <table class="table table-sm table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Sistema</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Link</th>
+                    <th scope="col">Connector</th>
+                    <th scope="col">Shutdown</th>
                     <th scope="col">Dt. Versão</th>
                     <th scope="col">Status</th>
                 </tr>
@@ -40,7 +44,9 @@
                     <tr>
                         <td class="col-1">{{ client.system.initials }}</td>
                         <td class="col-2">{{ client.name }}</td>
-                        <td class="col-7"><a href="{{ client.link }}">{{ client.link }}</a></td>
+                        <td class="col-5"><a href="{{ client.link }}">{{ client.link }}</a></td>
+                        <td class="col-1">{{ client.port.connector }}</td>
+                        <td class="col-1">{{ client.port.shutdown }}</td>
                         <td class="col-1">{{ client.version|date:"d/m/Y" }}</td>
                         {% if client.status == '1' %}
                             <td class="col-1 text-success"><i class="fa fa-check-circle"></i> {{ client.get_status_display }}</td>
@@ -51,6 +57,28 @@
                 {% endfor %}
             </tbody>
         </table>
+            </div>
+            <div class="col">
+                <h4><i class="fa fa-chain-broken"></i> Portas Livres</h4>
+                <table class="table table-sm table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Connector</th>
+                    <th scope="col">Shutdown</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for port in ports %}
+                    <tr>
+                        <td class="col-1">{{ port.connector }}</td>
+                        <td class="col-2">{{ port.shutdown }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

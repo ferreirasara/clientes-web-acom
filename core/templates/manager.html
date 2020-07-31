@@ -34,7 +34,7 @@
                     <table class="table table-sm table-hover">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Acesso</th>
+                                <th>Connector</th>
                                 <th>Shutdown</th>
                                 <th></th>
                             </tr>
@@ -45,8 +45,8 @@
                                     <td class="col-2">{{ port.connector }}</td>
                                     <td class="col-2">{{ port.shutdown }}</td>
                                     <td class="text-right">
-                                        <a href="{% url 'edit' obj='p' pk=port.id %}" class="text-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="{% url 'delete' obj='p' pk=port.id %}" class="text-danger"><i class="fa fa-remove"></i></a>
+                                        <a href="{% url 'edit' obj='p' pk=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                        <a href="{% url 'delete' obj='p' pk=port.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -74,8 +74,8 @@
                                     <td class="col-2">{{ system.initials }}</td>
                                     <td class="col-4">{{ system.name }}</td>
                                     <td class="text-right">
-                                        <a href="{% url 'edit' obj='s' pk=system.id %}" class="text-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="{% url 'delete' obj='s' pk=system.id %}" class="text-danger"><i class="fa fa-remove"></i></a>
+                                        <a href="{% url 'edit' obj='s' pk=system.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                        <a href="{% url 'delete' obj='s' pk=system.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -107,8 +107,8 @@
                                     <td class="col-2">{{ client.name }}</td>
                                     <td class="col-2">{{ client.get_status_display }}</td>
                                     <td class="text-right">
-                                        <a href="{% url 'edit' obj='c' pk=client.id %}" class="text-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="{% url 'delete' obj='c' pk=client.id %}" class="text-danger"><i class="fa fa-remove"></i></a>
+                                        <a href="{% url 'edit' obj='c' pk=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                        <a href="{% url 'delete' obj='c' pk=client.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}

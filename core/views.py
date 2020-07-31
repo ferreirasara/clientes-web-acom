@@ -29,7 +29,8 @@ def logoutUser(request):
 def index(request):
     if str(request.user) != 'AnonymousUser':
         context = {
-            'clients': Client.objects.all()
+            'clients': Client.objects.all(),
+            'ports': Port.objects.exclude(id__in=Client.objects.all())
         }
         return render(request, 'index.html', context)
     else:
@@ -96,7 +97,9 @@ def new(request, obj):
                 form = PortForm(request.POST)
                 if form.is_valid():
                     form.save()
-                    redirect('manager')
+                    return redirect('manager')
+                else:
+                    return render(request, 'edit-client.html', {'form': PortForm()})
             else:
                 return render(request, 'edit-port.html', {'form': PortForm()})
         elif obj == 's':
@@ -104,7 +107,9 @@ def new(request, obj):
                 form = SystemForm(request.POST)
                 if form.is_valid():
                     form.save()
-                    redirect('manager')
+                    return redirect('manager')
+                else:
+                    return render(request, 'edit-client.html', {'form': SystemForm()})
             else:
                 return render(request, 'edit-system.html', {'form': SystemForm()})
         elif obj == 'c':
@@ -112,7 +117,9 @@ def new(request, obj):
                 form = ClientForm(request.POST)
                 if form.is_valid():
                     form.save()
-                    redirect('manager')
+                    return redirect('manager')
+                else:
+                    return render(request, 'edit-client.html', {'form': ClientForm()})
             else:
                 return render(request, 'edit-client.html', {'form': ClientForm()})
     else:
