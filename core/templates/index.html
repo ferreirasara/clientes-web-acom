@@ -25,57 +25,61 @@
     </nav>
     <div class="container-fluid p-3">
         <div class="row">
-            <div class="col-10">
+            <div class="col-lg-10">
                 <h4><i class="fa fa-users"></i> Lista de Clientes</h4>
-                <table class="table table-sm table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Sistema</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Link</th>
-                    <th scope="col">Connector</th>
-                    <th scope="col">Shutdown</th>
-                    <th scope="col">Dt. Versão</th>
-                    <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for client in clients %}
-                    <tr>
-                        <td class="col-1">{{ client.system.initials }}</td>
-                        <td class="col-2">{{ client.name }}</td>
-                        <td class="col-5"><a href="{{ client.link }}">{{ client.link }}</a></td>
-                        <td class="col-1">{{ client.port.connector }}</td>
-                        <td class="col-1">{{ client.port.shutdown }}</td>
-                        <td class="col-1">{{ client.version|date:"d/m/Y" }}</td>
-                        {% if client.status == '1' %}
-                            <td class="col-1 text-success"><i class="fa fa-check-circle"></i> {{ client.get_status_display }}</td>
-                        {% else %}
-                            <td class="col-1 text-danger"><i class="fa fa-close"></i> {{ client.get_status_display }}</td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Sistema</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Link</th>
+                                <th scope="col">Connector</th>
+                                <th scope="col">Shutdown</th>
+                                <th scope="col">Dt. Versão</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for client in clients %}
+                                <tr>
+                                    <td scope="row">{{ client.system.initials }}</td>
+                                    <td>{{ client.name|truncatechars:15 }}</td>
+                                    <td><a href="{{ client.link }}">{{ client.link|truncatechars:15 }}</a></td>
+                                    <td>{{ client.port.connector }}</td>
+                                    <td>{{ client.port.shutdown }}</td>
+                                    <td>{{ client.version|date:"d/m/Y" }}</td>
+                                    {% if client.status == '1' %}
+                                        <td class="text-success"><i class="fa fa-check-circle"></i> {{ client.get_status_display }}</td>
+                                    {% else %}
+                                        <td class="text-danger"><i class="fa fa-close"></i> {{ client.get_status_display }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <h4><i class="fa fa-chain-broken"></i> Portas Livres</h4>
-                <table class="table table-sm table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Connector</th>
-                    <th scope="col">Shutdown</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for port in ports %}
-                    <tr>
-                        <td class="col-1">{{ port.connector }}</td>
-                        <td class="col-2">{{ port.shutdown }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Connector</th>
+                                <th scope="col">Shutdown</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for port in ports %}
+                                <tr>
+                                    <td scope="row">{{ port.connector }}</td>
+                                    <td>{{ port.shutdown }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

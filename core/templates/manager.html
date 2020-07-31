@@ -25,95 +25,103 @@
     </nav>
     <div class="container p-2">
         <div class="row">
-            <div class="col">
+            <div class="col-lg">
                 <h4>
                     Portas
                     <a href="{% url 'new' obj='p' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
                 </h4>
-                <div class="tableFixHead">
-                    <table class="table table-sm table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Connector</th>
-                                <th>Shutdown</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for port in ports %}
+                <div class="table-responsive">
+                    <div class="tableFixHead">
+                        <table class="table table-sm table-hover">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td class="col-2">{{ port.connector }}</td>
-                                    <td class="col-2">{{ port.shutdown }}</td>
-                                    <td class="text-right">
-                                        <a href="{% url 'edit' obj='p' pk=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                        <a href="{% url 'delete' obj='p' pk=port.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
-                                    </td>
+                                    <th scope="col">Connector</th>
+                                    <th scope="col">Shutdown</th>
+                                    <th scope="col"></th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for port in ports %}
+                                    <tr>
+                                        <td scope="row">{{ port.connector }}</td>
+                                        <td>{{ port.shutdown }}</td>
+                                        <td class="text-right">
+                                            <a href="{% url 'edit' obj='p' pk=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                            <a href="{% url 'delete' obj='p' pk=port.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <h4>
                     Sistemas
                     <a href="{% url 'new' obj='s' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
                 </h4>
-                <div class="tableFixHead">
-                    <table class="table table-sm table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Sigla</th>
-                                <th>Nome</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for system in systens %}
+                <div class="table-responsive">
+                    <div class="tableFixHead">
+                        <table class="table table-sm table-hover">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td class="col-2">{{ system.initials }}</td>
-                                    <td class="col-4">{{ system.name }}</td>
-                                    <td class="text-right">
-                                        <a href="{% url 'edit' obj='s' pk=system.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                        <a href="{% url 'delete' obj='s' pk=system.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
-                                    </td>
+                                    <th scope="col">Sigla</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col"></th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for system in systens %}
+                                    <tr>
+                                        <td scope="row">{{ system.initials }}</td>
+                                        <td>{{ system.name }}</td>
+                                        <td class="text-right">
+                                            <a href="{% url 'edit' obj='s' pk=system.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                            <a href="{% url 'delete' obj='s' pk=system.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-lg">
                 <h4>
                     Clientes
                     <a href="{% url 'new' obj='c' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
                 </h4>
-                <div class="tableFixHead">
-                    <table class="table table-sm table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Sistema</th>
-                                <th>Nome</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for client in clients %}
+                <div class="table-responsive">
+                    <div class="tableFixHead">
+                        <table class="table table-sm table-hover">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td class="col-2">{{ client.system.initials }}</td>
-                                    <td class="col-2">{{ client.name }}</td>
-                                    <td class="col-2">{{ client.get_status_display }}</td>
-                                    <td class="text-right">
-                                        <a href="{% url 'edit' obj='c' pk=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                        <a href="{% url 'delete' obj='c' pk=client.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
-                                    </td>
+                                    <th scope="col">Sistema</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Dt. Versão</th>
+                                    <th scope="col"></th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for client in clients %}
+                                    <tr>
+                                        <td scope="row">{{ client.system.initials }}</td>
+                                        <td>{{ client.name }}</td>
+                                        <td>{{ client.get_status_display }}</td>
+                                        <td>{{ client.version|date:"d/m/Y" }}</td>
+                                        <td class="text-right">
+                                            <a href="{% url 'edit' obj='c' pk=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                            <a href="{% url 'delete' obj='c' pk=client.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
