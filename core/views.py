@@ -40,9 +40,9 @@ def index(request):
 def manager(request):
     if str(request.user) != 'AnonymousUser':
         context = {
-            'clients': Client.objects.all(),
-            'ports': Port.objects.all(),
-            'systens': System.objects.all()
+            'clients': Client.objects.all().order_by('name'),
+            'ports': Port.objects.all().order_by('connector'),
+            'systens': System.objects.all().order_by('initials')
         }
         return render(request, 'manager.html', context)
     else:

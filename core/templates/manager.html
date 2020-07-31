@@ -49,7 +49,7 @@
                                         {% if port.status == 1 %}
                                             <td class="text-success"><i class="fa fa-check-circle"></i> {{ port.get_status_display }}</td>
                                         {% else %}
-                                            <td class="text-danger"><i class="fa fa-close"></i> {{ port.get_status_display }}</td>
+                                            <td class="text-danger"><i class="fa fa-ban"></i> {{ port.get_status_display }}</td>
                                         {% endif %}
                                         <td class="text-right">
                                             <a href="{% url 'edit' obj='p' pk=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
@@ -108,7 +108,6 @@
                                     <th scope="col">Sistema</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Dt. Versão</th>
                                     <th scope="col">Portas</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -123,7 +122,6 @@
                                         {% else %}
                                             <td class="text-danger"><i class="fa fa-close"></i> {{ client.get_status_display }}</td>
                                         {% endif %}
-                                        <td>{{ client.version|date:"d/m/Y" }}</td>
                                         <td>{{ client.port.connector }} - {{ client.port.shutdown }}</td>
                                         <td class="text-right">
                                             <a href="{% url 'edit' obj='c' pk=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>

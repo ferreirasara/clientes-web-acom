@@ -28,7 +28,7 @@
             <div class="col-lg-10">
                 <h4><i class="fa fa-users"></i> Lista de Clientes</h4>
                 <div class="table-responsive">
-                    <table class="table table-sm table-hover">
+                    <table class="table table-sm table-hover table-borderless">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Sistema</th>
@@ -42,10 +42,16 @@
                         </thead>
                         <tbody>
                             {% for client in clients %}
-                                <tr>
-                                    <td scope="row">{{ client.system.initials }}</td>
+                                    {% if client.system.id == 5 %}   <tr class="table-primary">
+                                    {% elif client.system.id == 6 %} <tr class="table-warning">
+                                    {% else %}                       <tr class="table-success">
+                                    {% endif %}
+                                <td scope="row"><b>{{ client.system.initials }}</b></td>
                                     <td>{{ client.name }}</td>
-                                    <td><a href="{{ client.link }}">{{ client.link }}</a></td>
+                                    {% if client.system.id == 5 %}   <td><a class="badge badge-primary" href="{{ client.link }}">{{ client.link }}</a></td>
+                                    {% elif client.system.id == 6 %} <td><a class="badge badge-warning" href="{{ client.link }}">{{ client.link }}</a></td>
+                                    {% else %}                       <td><a class="badge badge-success" href="{{ client.link }}">{{ client.link }}</a></td>
+                                    {% endif %}
                                     <td>{{ client.port.connector }}</td>
                                     <td>{{ client.port.shutdown }}</td>
                                     <td>{{ client.version|date:"d/m/Y" }}</td>
