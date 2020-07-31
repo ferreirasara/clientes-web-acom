@@ -1,0 +1,3 @@
+.tableFixHead          { overflow-y: auto; height: 250px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+.btn-table             { height: 25px; }
