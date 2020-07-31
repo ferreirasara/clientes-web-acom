@@ -28,9 +28,12 @@ def logoutUser(request):
 
 def index(request):
     if str(request.user) != 'AnonymousUser':
+        ports = []
+        for client in Client.objects.all():
+            ports.append(client.port_id)
         context = {
             'clients': Client.objects.all(),
-            'ports': Port.objects.exclude(id__in=Client.objects.all())
+            'ports': Port.objects.exclude(id__in=ports)
         }
         return render(request, 'index.html', context)
     else:
