@@ -11,6 +11,10 @@ Neste projeto, foram utilizados:
 * Django 3.0.8
 * Gunicorn 20.0.4
 * WhiteNoise 5.1.0
+* Bootstrap 4.5
+* Font Awesome 5
+* Heroku
+* PostgreSQL (from Heroku)
 
 Para ser executado, o projeto necessita de duas variáveis de ambiente:
 * CLIENTESWEBACOM_SECRET_KEY -> Chave para execução do projeto.
