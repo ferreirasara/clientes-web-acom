@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Client, Port, System
 from django.http import HttpResponseRedirect
-from .forms import PortForm, SystemForm, ClientForm
+from .forms import PortForm, SystemForm, ClientForm, UpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from datetime import datetime
 
 
 def loginUser(request):
@@ -34,6 +35,23 @@ def index(request):
             'ports': Port.objects.filter(status=1).order_by('connector')
         }
         return render(request, 'index.html', context)
+    else:
+        return loginUser(request)
+
+
+def update(request):
+    if str(request.user) != 'AnonymousUser':
+        if request.method == 'POST':
+            form = UpdateForm(request.POST)
+            if form.is_valid():
+                clients = Client.objects.filter(system_id=form.data['systemId'])
+                for client in clients:
+                    client.version = datetime.strptime(form.data['date'], '%d/%m/%Y').date()
+                    client.save()
+                return redirect('index')
+        else:
+            form = UpdateForm()
+            return render(request, 'update.html', {'form': form})
     else:
         return loginUser(request)
 

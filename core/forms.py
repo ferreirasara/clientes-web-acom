@@ -18,3 +18,8 @@ class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ['name', 'link', 'port', 'system', 'version', 'status']
+
+
+class UpdateForm(forms.Form):
+    systemId = forms.ModelChoiceField(queryset=System.objects.all())
+    date = forms.DateField(label='Data', required=True)

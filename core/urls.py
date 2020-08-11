@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, manager, delete, edit, new, logoutUser, loginUser
+from .views import index, manager, delete, edit, new, logoutUser, loginUser, update
 
 urlpatterns = [
     path('', index, name='index'),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('new/<str:obj>', new, name='new'),
     path('logout', logoutUser, name='logout'),
     path('login', loginUser, name='login'),
+    path('update', update, name='update'),
 ]

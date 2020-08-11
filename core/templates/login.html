@@ -11,7 +11,7 @@
     <title>Clientes Web - ACOM</title>
 </head>
 <body>
-    <nav class="navbar stick-top navbar-expand-lg navbar-dark bg-dark">
+   <nav class="navbar stick-top navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,20 +20,12 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 navbar-left">
                 <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'manager' %}"><i class="fa fa-cogs"></i> Gerenciar</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'update' %}"><i class="fa fa-refresh"></i> Atualizar</a></li>
             </ul>
+            <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
     </nav>
     <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
         <div class="container justify-content-center w-50 p-2">
             <form method="post">{% csrf_token %}
                 <div class="form-group">
