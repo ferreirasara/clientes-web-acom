@@ -45,7 +45,7 @@
                     <label class="col-form-label col-form-label-sm"><b>Nome</b></label>
                     {{ form.name|addclass:"form-control" }}
                 </div>
-
+                    <input type="hidden" name="previousPage" value="{{ request.META.HTTP_REFERER }}">
                 <button type="submit" class="btn btn-block btn-success mt-2"><i class="fa fa-check"></i> Salvar</button>
             </form>
         </div>

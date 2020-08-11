@@ -61,6 +61,7 @@
                 <label class="col-form-label col-form-label-sm"><b>Status</b></label>
                 {{ form.status|addclass:"form-control" }}
             </div>
+                <input type="hidden" name="previousPage" value="{{ request.META.HTTP_REFERER }}">
             <div class="form-group">
                 <button type="submit" class="btn btn-block btn-success mt-2"><i class="fa fa-check"></i> Salvar</button>
             </div>
