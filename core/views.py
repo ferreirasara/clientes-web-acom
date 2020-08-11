@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Client, Port, System
+from django.http import HttpResponseRedirect
 from .forms import PortForm, SystemForm, ClientForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -29,8 +30,8 @@ def logoutUser(request):
 def index(request):
     if str(request.user) != 'AnonymousUser':
         context = {
-            'clients': Client.objects.all(),
-            'ports': Port.objects.filter(status=1)
+            'clients': Client.objects.all().order_by('name'),
+            'ports': Port.objects.filter(status=1).order_by('connector')
         }
         return render(request, 'index.html', context)
     else:
@@ -73,14 +74,16 @@ def edit(request, obj, pk):
             form = PortForm(request.POST or None, instance=instance)
             if form.is_valid():
                 form.save()
-                return redirect('manager')
+                nextPage = request.POST['previousPage']
+                return HttpResponseRedirect(nextPage)
             return render(request, 'edit-port.html', {'form': form})
         elif obj == 's':
             instance = get_object_or_404(System, id=pk)
             form = SystemForm(request.POST or None, instance=instance)
             if form.is_valid():
                 form.save()
-                return redirect('manager')
+                nextPage = request.POST['previousPage']
+                return HttpResponseRedirect(nextPage)
             return render(request, 'edit-system.html', {'form': form})
         elif obj == 'c':
             instance = get_object_or_404(Client, id=pk)
@@ -90,7 +93,8 @@ def edit(request, obj, pk):
                 port = get_object_or_404(Port, id=instance.port_id)
                 port.status = 2
                 port.save()
-                return redirect('manager')
+                nextPage = request.POST['previousPage']
+                return HttpResponseRedirect(nextPage)
             return render(request, 'edit-client.html', {'form': form})
     else:
         return loginUser(request)

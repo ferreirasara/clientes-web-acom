@@ -42,24 +42,24 @@
                         </thead>
                         <tbody>
                             {% for client in clients %}
-                                    {% if client.system.id == 5 %}   <tr class="table-primary">
-                                    {% elif client.system.id == 6 %} <tr class="table-warning">
-                                    {% else %}                       <tr class="table-success">
+                                    {% if client.system.id == 5 %}   <tr class="table-primary" ondblclick="editClient({{ client.id }});">
+                                    {% elif client.system.id == 6 %} <tr class="table-warning" ondblclick="editClient({{ client.id }});">
+                                    {% else %}                       <tr class="table-success" ondblclick="editClient({{ client.id }});">
                                     {% endif %}
                                 <td scope="row"><b>{{ client.system.initials }}</b></td>
-                                    <td>{{ client.name }}</td>
-                                    {% if client.system.id == 5 %}   <td><a class="badge badge-primary" href="{{ client.link }}">{{ client.link }}</a></td>
-                                    {% elif client.system.id == 6 %} <td><a class="badge badge-warning" href="{{ client.link }}">{{ client.link }}</a></td>
-                                    {% else %}                       <td><a class="badge badge-success" href="{{ client.link }}">{{ client.link }}</a></td>
-                                    {% endif %}
-                                    <td>{{ client.port.connector }}</td>
-                                    <td>{{ client.port.shutdown }}</td>
-                                    <td>{{ client.version|date:"d/m/Y" }}</td>
-                                    {% if client.status == '1' %}
-                                        <td class="text-success"><i class="fa fa-check-circle"></i> {{ client.get_status_display }}</td>
-                                    {% else %}
-                                        <td class="text-danger"><i class="fa fa-close"></i> {{ client.get_status_display }}</td>
-                                    {% endif %}
+                                        <td>{{ client.name }}</td>
+                                        {% if client.system.id == 5 %}   <td><a class="badge badge-primary" href="{{ client.link }}">{{ client.link }}</a></td>
+                                        {% elif client.system.id == 6 %} <td><a class="badge badge-warning" href="{{ client.link }}">{{ client.link }}</a></td>
+                                        {% else %}                       <td><a class="badge badge-success" href="{{ client.link }}">{{ client.link }}</a></td>
+                                        {% endif %}
+                                        <td>{{ client.port.connector }}</td>
+                                        <td>{{ client.port.shutdown }}</td>
+                                        <td>{{ client.version|date:"d/m/Y" }}</td>
+                                        {% if client.status == '1' %}
+                                            <td class="text-success"><i class="fa fa-check-circle"></i> {{ client.get_status_display }}</td>
+                                        {% else %}
+                                            <td class="text-danger"><i class="fa fa-close"></i> {{ client.get_status_display }}</td>
+                                        {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -90,7 +90,7 @@
         </div>
 
     </div>
-
+    <script src="{% static 'js/script.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
