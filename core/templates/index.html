@@ -48,9 +48,9 @@
                                     {% endif %}
                                 <td scope="row"><b>{{ client.system.initials }}</b></td>
                                         <td>{{ client.name }}</td>
-                                        {% if client.system.id == 5 %}   <td><a class="badge badge-primary" href="{{ client.link }}">{{ client.link }}</a></td>
-                                        {% elif client.system.id == 6 %} <td><a class="badge badge-warning" href="{{ client.link }}">{{ client.link }}</a></td>
-                                        {% else %}                       <td><a class="badge badge-success" href="{{ client.link }}">{{ client.link }}</a></td>
+                                        {% if client.system.id == 5 %}   <td><a target="_blank" class="badge badge-primary" href="{{ client.link }}">{{ client.link }}</a></td>
+                                        {% elif client.system.id == 6 %} <td><a target="_blank" class="badge badge-warning" href="{{ client.link }}">{{ client.link }}</a></td>
+                                        {% else %}                       <td><a target="_blank" class="badge badge-success" href="{{ client.link }}">{{ client.link }}</a></td>
                                         {% endif %}
                                         <td>{{ client.port.connector }}</td>
                                         <td>{{ client.port.shutdown }}</td>
