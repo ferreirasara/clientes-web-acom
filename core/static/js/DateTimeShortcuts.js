@@ -25,6 +25,9 @@
         clockDivName: 'clockbox', // name of clock <div> that gets toggled
         clockLinkName: 'clocklink', // name of the link that is used to toggle
         shortCutsClass: 'datetimeshortcuts', // class of the clock and cal shortcuts
+        divInputGroupPrependClass: 'input-group-prepend',
+        divInputGroupTextClass: 'input-group-text text-info',
+        linkClass: 'text-info',
         timezoneWarningClass: 'timezonewarning', // class of the warning for timezone mismatch
         timezoneOffset: 0,
         init: function() {
@@ -107,10 +110,19 @@
             DateTimeShortcuts.dismissClockFunc[num] = function() { DateTimeShortcuts.dismissClock(num); return true; };
 
             // Shortcut links (clock icon and "Now" link)
+            var divInputGroupPrepend = document.createElement('div');
+            divInputGroupPrepend.className = DateTimeShortcuts.divInputGroupPrependClass;
+            inp.parentNode.insertBefore(divInputGroupPrepend, inp.nextSibling);
+
+            var divInputGroupText = document.createElement('div');
+            divInputGroupText.className = DateTimeShortcuts.divInputGroupTextClass;
+            divInputGroupPrepend.appendChild(divInputGroupText);
+
             var shortcuts_span = document.createElement('span');
             shortcuts_span.className = DateTimeShortcuts.shortCutsClass;
-            inp.parentNode.insertBefore(shortcuts_span, inp.nextSibling);
+            divInputGroupText.appendChild(shortcuts_span);
             var now_link = document.createElement('a');
+            now_link.className = DateTimeShortcuts.linkClass;
             now_link.setAttribute('href', "#");
             now_link.textContent = gettext('Now');
             now_link.addEventListener('click', function(e) {
@@ -237,10 +249,20 @@
             DateTimeShortcuts.dismissCalendarFunc[num] = function() { DateTimeShortcuts.dismissCalendar(num); return true; };
 
             // Shortcut links (calendar icon and "Today" link)
+            var divInputGroupPrepend = document.createElement('div');
+            divInputGroupPrepend.className = DateTimeShortcuts.divInputGroupPrependClass;
+            inp.parentNode.insertBefore(divInputGroupPrepend, inp.nextSibling);
+
+            var divInputGroupText = document.createElement('div');
+            divInputGroupText.className = DateTimeShortcuts.divInputGroupTextClass;
+            divInputGroupPrepend.appendChild(divInputGroupText);
+
             var shortcuts_span = document.createElement('span');
             shortcuts_span.className = DateTimeShortcuts.shortCutsClass;
-            inp.parentNode.insertBefore(shortcuts_span, inp.nextSibling);
+            // inp.parentNode.insertBefore(shortcuts_span, inp.nextSibling);
+            divInputGroupText.appendChild(shortcuts_span);
             var today_link = document.createElement('a');
+            today_link.className = DateTimeShortcuts.linkClass;
             today_link.setAttribute('href', '#');
             today_link.appendChild(document.createTextNode(gettext('Today')));
             today_link.addEventListener('click', function(e) {

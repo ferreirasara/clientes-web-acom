@@ -38,7 +38,9 @@
                     <div class="row">
                         {{ form.date.errors }}
                         <label>Data: </label>
-                        {{ form.date|addclass:"form-control vDateField" }}
+                        <div class="input-group">
+                            {{ form.date|addclass:"form-control vDateField" }}
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-block btn-success"><i class="fa fa-refresh"></i> Atualizar</button>

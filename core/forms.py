@@ -22,4 +22,4 @@ class ClientForm(forms.ModelForm):
 
 class UpdateForm(forms.Form):
     systemId = forms.ModelChoiceField(queryset=System.objects.all())
-    date = forms.DateField(label='Data', required=True)
+    date = forms.DateTimeField(label='Data', required=True)
