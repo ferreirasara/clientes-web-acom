@@ -6,7 +6,7 @@ from .forms import PortForm, SystemForm, ClientForm, UpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from datetime import datetime
-
+import requests
 
 def loginUser(request):
     if request.method == "POST":
@@ -54,6 +54,30 @@ def update(request):
             return render(request, 'update.html', {'form': form})
     else:
         return loginUser(request)
+
+
+def verify(request):
+    clients = Client.objects.filter(status=1)
+    clientsWithError = []
+    for client in clients:
+        try:
+            r = requests.get(client.link)
+            if (r.text.find('<html>')) == -1:
+                clientsWithError.append(client)
+        except:
+            clientsWithError.append(client)
+    if len(clientsWithError) == 0:
+        storage = messages.get_messages(request)
+        storage.used = True
+        messages.add_message(request, messages.SUCCESS, 'Todos os links estão funcionando.')
+    else:
+        text = 'Alguns links não estão funcionando: '
+        for error in clientsWithError:
+            text += '[' + error.system.initials + '_' + error.name + '] '
+        storage = messages.get_messages(request)
+        storage.used = True
+        messages.add_message(request, messages.ERROR, text)
+    return redirect('index')
 
 
 def manager(request):

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, manager, delete, edit, new, logoutUser, loginUser, update
+from .views import index, manager, delete, edit, new, logoutUser, loginUser, update, verify
 
 urlpatterns = [
     path('', index, name='index'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout', logoutUser, name='logout'),
     path('login', loginUser, name='login'),
     path('update', update, name='update'),
+    path('verify', verify, name='verify'),
 ]

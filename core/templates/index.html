@@ -24,10 +24,24 @@
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
     </nav>
+
     <div class="container-fluid p-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
         <div class="row">
             <div class="col-lg-10">
-                <h4><i class="fa fa-users"></i> Lista de Clientes</h4>
+                <div class="row justify-content-sm-between mt-2">
+                    <div class="col-auto"><h4><i class="fa fa-users"></i> Lista de Clientes</h4></div>
+                    <div class="col-auto"><a href="{% url 'verify' %}" class="btn btn-sm btn-success text-light"><i class="fa fa-check"></i> Verificar</a></div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-sm table-hover table-borderless">
                         <thead class="thead-dark">
