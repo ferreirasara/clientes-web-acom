@@ -2,6 +2,14 @@ from django.db import models
 from django.db.models import signals
 
 
+class Note(models.Model):
+    title = models.CharField('Title', max_length=300)
+    text = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
 class System(models.Model):
     initials = models.CharField('Initials', max_length=3)
     name = models.CharField('Name', max_length=100)
@@ -28,8 +36,6 @@ class Port(models.Model):
 
     def __str__(self):
         return str(self.connector) + '-' + str(self.shutdown)
-
-
 
 
 class Client(models.Model):

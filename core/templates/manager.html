@@ -20,6 +20,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
                 <li class="nav-item"><a class="nav-link active" href="{% url 'manager' %}"><i class="fa fa-cogs"></i> Gerenciar</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'update' %}"><i class="fa fa-refresh"></i> Atualizar</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'notes' %}"><i class="fa fa-sticky-note"></i> Anotações</a></li>
             </ul>
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
@@ -29,7 +30,7 @@
             <div class="col-lg">
                 <h4>
                     Portas
-                    <a href="{% url 'new' obj='p' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
+                    <a href="{% url 'newPort' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
                 </h4>
                 <div class="table-responsive">
                     <div class="tableFixHead">
@@ -53,8 +54,8 @@
                                             <td class="text-danger"><i class="fa fa-ban"></i> {{ port.get_status_display }}</td>
                                         {% endif %}
                                         <td class="text-right">
-                                            <a href="{% url 'edit' obj='p' pk=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                            <a href="{% url 'delete' obj='p' pk=port.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                                            <a href="{% url 'editPort' idPort=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                            <a href="{% url 'deletePort' idPort=port.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -66,7 +67,7 @@
             <div class="col-lg">
                 <h4>
                     Sistemas
-                    <a href="{% url 'new' obj='s' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
+                    <a href="{% url 'newSystem' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
                 </h4>
                 <div class="table-responsive">
                     <div class="tableFixHead">
@@ -84,8 +85,8 @@
                                         <td scope="row">{{ system.initials }}</td>
                                         <td>{{ system.name }}</td>
                                         <td class="text-right">
-                                            <a href="{% url 'edit' obj='s' pk=system.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                            <a href="{% url 'delete' obj='s' pk=system.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                                            <a href="{% url 'editSystem' idSystem=system.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                            <a href="{% url 'deleteSystem' idSystem=system.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -99,7 +100,7 @@
             <div class="col-lg">
                 <h4>
                     Clientes
-                    <a href="{% url 'new' obj='c' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
+                    <a href="{% url 'newClient' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
                 </h4>
                 <div class="table-responsive">
                     <div class="tableFixHead">
@@ -125,8 +126,8 @@
                                         {% endif %}
                                         <td>{{ client.port.connector }} - {{ client.port.shutdown }}</td>
                                         <td class="text-right">
-                                            <a href="{% url 'edit' obj='c' pk=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                            <a href="{% url 'delete' obj='c' pk=client.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                                            <a href="{% url 'editClient' idClient=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                            <a href="{% url 'deleteClient' idClient=client.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}

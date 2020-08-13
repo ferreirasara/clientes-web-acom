@@ -1,5 +1,11 @@
 from django import forms
-from .models import Port, System, Client
+from .models import Port, System, Client, Note
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'text']
 
 
 class PortForm(forms.ModelForm):

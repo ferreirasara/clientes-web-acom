@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Client, Port, System
+from .models import Client, Port, System, Note
 from django.http import HttpResponseRedirect
-from .forms import PortForm, SystemForm, ClientForm, UpdateForm
+from .forms import PortForm, SystemForm, ClientForm, UpdateForm, NoteForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
 import requests
+
 
 def loginUser(request):
     if request.method == "POST":
@@ -35,6 +36,49 @@ def index(request):
             'ports': Port.objects.filter(status=1).order_by('connector')
         }
         return render(request, 'index.html', context)
+    else:
+        return loginUser(request)
+
+
+def notes(request):
+    if str(request.user) != 'AnonymousUser':
+        context = {
+            'notes': Note.objects.all()
+        }
+        return render(request, 'notes.html', context=context)
+    else:
+        return loginUser(request)
+
+
+def newNote(request):
+    if str(request.method) == 'POST':
+        form = NoteForm(request.POST)
+        print(form)
+        if form.is_valid():
+            form.save()
+            return redirect('notes')
+        else:
+            return render(request, 'edit-note.html', {'form': form})
+    else:
+        return render(request, 'edit-note.html', {'form': NoteForm()})
+
+
+def editNote(request, idNote):
+    if str(request.user) != 'AnonymousUser':
+        instance = get_object_or_404(Note, id=idNote)
+        form = NoteForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('notes')
+        return render(request, 'edit-note.html', {'form': form})
+    else:
+        return loginUser(request)
+
+
+def deleteNote(request, idNote):
+    if str(request.user) != 'AnonymousUser':
+        Note.objects.get(pk=idNote).delete()
+        return redirect('notes')
     else:
         return loginUser(request)
 
@@ -92,90 +136,115 @@ def manager(request):
         return loginUser(request)
 
 
-def delete(request, obj, pk):
+def deleteClient(request, idClient):
     if str(request.user) != 'AnonymousUser':
-        if obj == 'p':
-            Port.objects.get(pk=pk).delete()
-        elif obj == 's':
-            System.objects.get(pk=pk).delete()
-        elif obj == 'c':
-            port = get_object_or_404(Port, id=Client.objects.get(pk=pk).port_id)
-            port.status = 1
-            port.save()
-            Client.objects.get(pk=pk).delete()
-
+        Client.objects.get(pk=idClient).delete()
         return redirect('manager')
     else:
         return loginUser(request)
 
 
-def edit(request, obj, pk):
+def deletePort(request, idPort):
     if str(request.user) != 'AnonymousUser':
-        if obj == 'p':
-            instance = get_object_or_404(Port, id=pk)
-            form = PortForm(request.POST or None, instance=instance)
-            if form.is_valid():
-                form.save()
-                nextPage = request.POST['previousPage']
-                return HttpResponseRedirect(nextPage)
-            return render(request, 'edit-port.html', {'form': form})
-        elif obj == 's':
-            instance = get_object_or_404(System, id=pk)
-            form = SystemForm(request.POST or None, instance=instance)
-            if form.is_valid():
-                form.save()
-                nextPage = request.POST['previousPage']
-                return HttpResponseRedirect(nextPage)
-            return render(request, 'edit-system.html', {'form': form})
-        elif obj == 'c':
-            instance = get_object_or_404(Client, id=pk)
-            form = ClientForm(request.POST or None, instance=instance)
-            if form.is_valid():
-                form.save()
-                port = get_object_or_404(Port, id=instance.port_id)
-                port.status = 2
-                port.save()
-                nextPage = request.POST['previousPage']
-                return HttpResponseRedirect(nextPage)
-            return render(request, 'edit-client.html', {'form': form})
+        Port.objects.get(pk=idPort).delete()
+        return redirect('manager')
     else:
         return loginUser(request)
 
 
-def new(request, obj):
+def deleteSystem(request, idSystem):
     if str(request.user) != 'AnonymousUser':
-        if obj == 'p':
-            if str(request.method) == 'POST':
-                form = PortForm(request.POST)
-                if form.is_valid():
-                    form.save()
-                    return redirect('manager')
-                else:
-                    return render(request, 'edit-client.html', {'form': PortForm()})
-            else:
-                return render(request, 'edit-port.html', {'form': PortForm()})
-        elif obj == 's':
-            if str(request.method) == 'POST':
-                form = SystemForm(request.POST)
-                if form.is_valid():
-                    form.save()
-                    return redirect('manager')
-                else:
-                    return render(request, 'edit-client.html', {'form': SystemForm()})
-            else:
-                return render(request, 'edit-system.html', {'form': SystemForm()})
-        elif obj == 'c':
-            if str(request.method) == 'POST':
-                form = ClientForm(request.POST)
-                if form.is_valid():
-                    client = form.save()
-                    port = get_object_or_404(Port, id=client.port_id)
-                    port.status = 2
-                    port.save()
-                    return redirect('manager')
-                else:
-                    return render(request, 'edit-client.html', {'form': ClientForm()})
+        System.objects.get(pk=idSystem).delete()
+        return redirect('manager')
+    else:
+        return loginUser(request)
+
+
+def editClient(request, idClient):
+    if str(request.user) != 'AnonymousUser':
+        instance = get_object_or_404(Client, id=idClient)
+        form = ClientForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            port = get_object_or_404(Port, id=instance.port_id)
+            port.status = 2
+            port.save()
+            nextPage = request.POST['previousPage']
+            return HttpResponseRedirect(nextPage)
+        return render(request, 'edit-client.html', {'form': form})
+    else:
+        return loginUser(request)
+
+
+def editPort(request, idPort):
+    if str(request.user) != 'AnonymousUser':
+        instance = get_object_or_404(Port, id=idPort)
+        form = PortForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            nextPage = request.POST['previousPage']
+            return HttpResponseRedirect(nextPage)
+        return render(request, 'edit-port.html', {'form': form})
+    else:
+        return loginUser(request)
+
+
+def editSystem(request, idSystem):
+    if str(request.user) != 'AnonymousUser':
+        instance = get_object_or_404(System, id=idSystem)
+        form = SystemForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            nextPage = request.POST['previousPage']
+            return HttpResponseRedirect(nextPage)
+        return render(request, 'edit-system.html', {'form': form})
+    else:
+        return loginUser(request)
+
+
+def newClient(request):
+    if str(request.user) != 'AnonymousUser':
+        if str(request.method) == 'POST':
+            form = ClientForm(request.POST)
+            if form.is_valid():
+                client = form.save()
+                port = get_object_or_404(Port, id=client.port_id)
+                port.status = 2
+                port.save()
+                return redirect('manager')
             else:
                 return render(request, 'edit-client.html', {'form': ClientForm()})
+        else:
+            return render(request, 'edit-client.html', {'form': ClientForm()})
+    else:
+        return loginUser(request)
+
+
+def newPort(request):
+    if str(request.user) != 'AnonymousUser':
+        if str(request.method) == 'POST':
+            form = PortForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('manager')
+            else:
+                return render(request, 'edit-client.html', {'form': PortForm()})
+        else:
+            return render(request, 'edit-port.html', {'form': PortForm()})
+    else:
+        return loginUser(request)
+
+
+def newSystem(request):
+    if str(request.user) != 'AnonymousUser':
+        if str(request.method) == 'POST':
+            form = SystemForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('manager')
+            else:
+                return render(request, 'edit-client.html', {'form': SystemForm()})
+        else:
+            return render(request, 'edit-system.html', {'form': SystemForm()})
     else:
         return loginUser(request)
