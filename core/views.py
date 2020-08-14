@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from django.contrib import messages
 from .models import Client, Port, System, Note
 from django.http import HttpResponseRedirect
-from .forms import PortForm, SystemForm, ClientForm, UpdateForm, NoteForm
+from .forms import PortForm, SystemForm, ClientForm, UpdateForm, NoteForm, SearchForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
@@ -33,9 +34,19 @@ def index(request):
     if str(request.user) != 'AnonymousUser':
         context = {
             'clients': Client.objects.all().order_by('name'),
-            'ports': Port.objects.filter(status=1).order_by('connector')
+            'ports': Port.objects.filter(status=1).order_by('connector'),
+            'form': SearchForm()
         }
-        return render(request, 'index.html', context)
+        if str(request.method) == 'POST':
+            context['form'] = SearchForm(request.POST)
+            if context['form'].is_valid():
+                search = context['form'].data['search']
+                context['clients'] = Client.objects.filter(name__contains=search).order_by('name')
+                return render(request, 'index.html', context)
+            else:
+                return render(request, 'index.html', context)
+        else:
+            return render(request, 'index.html', context)
     else:
         return loginUser(request)
 
@@ -51,16 +62,18 @@ def notes(request):
 
 
 def newNote(request):
-    if str(request.method) == 'POST':
-        form = NoteForm(request.POST)
-        print(form)
-        if form.is_valid():
-            form.save()
-            return redirect('notes')
+    if str(request.user) != 'AnonymousUser':
+        if str(request.method) == 'POST':
+            form = NoteForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('notes')
+            else:
+                return render(request, 'edit-note.html', {'form': form})
         else:
-            return render(request, 'edit-note.html', {'form': form})
+            return render(request, 'edit-note.html', {'form': NoteForm()})
     else:
-        return render(request, 'edit-note.html', {'form': NoteForm()})
+        return loginUser(request)
 
 
 def editNote(request, idNote):

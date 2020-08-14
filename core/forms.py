@@ -26,6 +26,10 @@ class ClientForm(forms.ModelForm):
         fields = ['name', 'link', 'port', 'system', 'version', 'status']
 
 
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=300, required=False)
+
+
 class UpdateForm(forms.Form):
     systemId = forms.ModelChoiceField(queryset=System.objects.all())
     date = forms.DateTimeField(label='Data', required=True)

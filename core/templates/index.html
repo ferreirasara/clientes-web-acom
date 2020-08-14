@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -19,7 +20,6 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 navbar-left">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'manager' %}"><i class="fa fa-cogs"></i> Gerenciar</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'update' %}"><i class="fa fa-refresh"></i> Atualizar</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'notes' %}"><i class="fa fa-sticky-note"></i> Anotações</a></li>
             </ul>
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
@@ -40,8 +40,32 @@
         <div class="row">
             <div class="col-lg-10">
                 <div class="row justify-content-sm-between mt-2">
-                    <div class="col-auto"><h4><i class="fa fa-users"></i> Lista de Clientes</h4></div>
-                    <div class="col-auto"><a href="{% url 'verify' %}" class="btn btn-sm btn-success text-light"><i class="fa fa-check"></i> Verificar</a></div>
+                    <div class="col-auto">
+                        <h4><i class="fa fa-users"></i> Lista de Clientes</h4>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row justify-content-sm-between mt-2">
+                            <div class="col-auto">
+                                <form method="post" autocomplete="off">{% csrf_token %}
+                                    <div class="input-group">
+                                        {{ form.search|addclass:"form-check" }}
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-sm btn-secondary"><i class="fa fa-search"></i> Pesquisar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{% url 'verify' %}" class="btn btn-sm btn-secondary text-light"><i class="fa fa-check"></i> Verificar</a>
+                                <a href="{% url 'update' %}" class="btn btn-sm btn-secondary text-light"><i class="fa fa-refresh"></i> Atualizar Dt. Versão</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-sm-between mt-2">
+                    <div class="col-auto">
+
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-sm table-hover table-borderless">
