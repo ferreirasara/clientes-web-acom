@@ -113,7 +113,7 @@ def update(request):
         return loginUser(request)
 
 
-def verify(request):
+def verifyClients(request):
     clients = Client.objects.filter(status=1)
     clientsWithError = []
     for client in clients:
@@ -129,8 +129,8 @@ def verify(request):
         messages.add_message(request, messages.SUCCESS, 'Todos os links estão funcionando.')
     else:
         text = 'Alguns links não estão funcionando: '
-        for error in clientsWithError:
-            text += '[' + error.system.initials + '_' + error.name + '] '
+        for client in clientsWithError:
+            text += '[' + client.system.initials + '_' + client.name + '] '
         storage = messages.get_messages(request)
         storage.used = True
         messages.add_message(request, messages.ERROR, text)

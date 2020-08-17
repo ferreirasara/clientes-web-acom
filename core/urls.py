@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, manager, logoutUser, loginUser, update, verify, notes
+from .views import index, manager, logoutUser, loginUser, update, verifyClients, notes
 from .views import newNote, newPort, newClient, newSystem
 from .views import editNote, editPort, editClient, editSystem
 from .views import deleteNote, deletePort, deleteClient, deleteSystem
@@ -8,7 +8,7 @@ from .views import deleteNote, deletePort, deleteClient, deleteSystem
 urlpatterns = [
     path('', index, name='index'),
     path('update', update, name='update'),
-    path('verify', verify, name='verify'),
+    path('verifyClients', verifyClients, name='verifyClients'),
     path('logout', logoutUser, name='logout'),
     path('login', loginUser, name='login'),
 
