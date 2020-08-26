@@ -44,7 +44,7 @@
                             </thead>
                             <tbody>
                                 {% for port in ports %}
-                                    <tr>
+                                    <tr ondblclick="editPort({{ port.id }});">
                                         <td scope="row">{{ port.connector }}</td>
                                         <td>{{ port.shutdown }}</td>
                                         {% if port.status == 1 %}
@@ -80,7 +80,7 @@
                             </thead>
                             <tbody>
                                 {% for system in systens %}
-                                    <tr>
+                                    <tr ondblclick="editSystem({{ system.id }});">
                                         <td scope="row">{{ system.initials }}</td>
                                         <td>{{ system.name }}</td>
                                         <td class="text-right">
@@ -115,7 +115,7 @@
                             </thead>
                             <tbody>
                                 {% for client in clients %}
-                                    <tr>
+                                    <tr ondblclick="editClient({{ client.id }});">
                                         <td scope="row">{{ client.system.initials }}</td>
                                         <td>{{ client.name }}</td>
                                         {% if client.status == '1' %}
@@ -137,7 +137,7 @@
             </div>
         </div>
     </div>
-
+    <script src="{% static 'js/script.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

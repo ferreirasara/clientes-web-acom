@@ -27,7 +27,7 @@ class ClientForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    search = forms.CharField(max_length=300, required=False)
+    search = forms.CharField(max_length=300, required=False, widget=forms.TextInput(attrs={'placeholder': 'Cliente'}))
 
 
 class UpdateForm(forms.Form):
