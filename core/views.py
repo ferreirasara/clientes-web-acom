@@ -41,7 +41,7 @@ def index(request):
             context['form'] = SearchForm(request.POST)
             if context['form'].is_valid():
                 search = context['form'].data['search']
-                context['clients'] = Client.objects.filter(name__contains=search).order_by('name')
+                context['clients'] = Client.objects.filter(name__icontains=search).order_by('name')
                 return render(request, 'index.html', context)
             else:
                 return render(request, 'index.html', context)
