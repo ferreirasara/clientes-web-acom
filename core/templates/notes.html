@@ -44,7 +44,7 @@
                                 <a href="{% url 'deleteNote' idNote=note.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                             </div>
                         </div>
-                        <p>{{ note.text }}</p>
+                        <p>{{ note.text|linebreaksbr|truncatewords:30 }}</p>
                     </div>
                 </div>
             {% endfor %}
