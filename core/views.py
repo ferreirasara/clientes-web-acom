@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
-from .models import Client, Port, System, Note
+from .models import Client, Port, System, Note, Server
 from django.http import HttpResponseRedirect
-from .forms import PortForm, SystemForm, ClientForm, UpdateForm, NoteForm, SearchForm
+from .forms import PortForm, SystemForm, ClientForm, UpdateForm, NoteForm, SearchForm, ServerForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
@@ -54,7 +54,7 @@ def index(request):
 def notes(request):
     if str(request.user) != 'AnonymousUser':
         context = {
-            'notes': Note.objects.all()
+            'notes': Note.objects.all().order_by('title')
         }
         return render(request, 'notes.html', context=context)
     else:
@@ -137,14 +137,42 @@ def verifyClients(request):
     return redirect('index')
 
 
-def manager(request):
+def managerClient(request):
     if str(request.user) != 'AnonymousUser':
         context = {
-            'clients': Client.objects.all().order_by('name'),
-            'ports': Port.objects.all().order_by('connector'),
-            'systens': System.objects.all().order_by('initials')
+            'clients': Client.objects.all().order_by('name')
         }
-        return render(request, 'manager.html', context)
+        return render(request, 'manager-client.html', context)
+    else:
+        return loginUser(request)
+
+
+def managerPort(request):
+    if str(request.user) != 'AnonymousUser':
+        context = {
+            'ports': Port.objects.all().order_by('connector')
+        }
+        return render(request, 'manager-port.html', context)
+    else:
+        return loginUser(request)
+
+
+def managerSystem(request):
+    if str(request.user) != 'AnonymousUser':
+        context = {
+            'systems': System.objects.all().order_by('initials')
+        }
+        return render(request, 'manager-system.html', context)
+    else:
+        return loginUser(request)
+
+
+def managerServer(request):
+    if str(request.user) != 'AnonymousUser':
+        context = {
+            'servers': Server.objects.all().order_by('name')
+        }
+        return render(request, 'manager-server.html', context)
     else:
         return loginUser(request)
 
@@ -168,6 +196,14 @@ def deletePort(request, idPort):
 def deleteSystem(request, idSystem):
     if str(request.user) != 'AnonymousUser':
         System.objects.get(pk=idSystem).delete()
+        return redirect('manager')
+    else:
+        return loginUser(request)
+
+
+def deleteServer(request, idServer):
+    if str(request.user) != 'AnonymousUser':
+        Server.objects.get(pk=idServer).delete()
         return redirect('manager')
     else:
         return loginUser(request)
@@ -215,6 +251,19 @@ def editSystem(request, idSystem):
         return loginUser(request)
 
 
+def editServer(request, idServer):
+    if str(request.user) != 'AnonymousUser':
+        instance = get_object_or_404(Server, id=idServer)
+        form = ServerForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            nextPage = request.POST['previousPage']
+            return HttpResponseRedirect(nextPage)
+        return render(request, 'edit-server.html', {'form': form})
+    else:
+        return loginUser(request)
+
+
 def newClient(request):
     if str(request.user) != 'AnonymousUser':
         if str(request.method) == 'POST':
@@ -241,7 +290,7 @@ def newPort(request):
                 form.save()
                 return redirect('manager')
             else:
-                return render(request, 'edit-client.html', {'form': PortForm()})
+                return render(request, 'edit-port.html', {'form': PortForm()})
         else:
             return render(request, 'edit-port.html', {'form': PortForm()})
     else:
@@ -256,8 +305,22 @@ def newSystem(request):
                 form.save()
                 return redirect('manager')
             else:
-                return render(request, 'edit-client.html', {'form': SystemForm()})
+                return render(request, 'edit-system.html', {'form': SystemForm()})
         else:
             return render(request, 'edit-system.html', {'form': SystemForm()})
+    else:
+        return loginUser(request)
+
+def newServer(request):
+    if str(request.user) != 'AnonymousUser':
+        if str(request.method) == 'POST':
+            form = ServerForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('manager')
+            else:
+                return render(request, 'edit-server.html', {'form': ServerForm()})
+        else:
+            return render(request, 'edit-server.html', {'form': ServerForm()})
     else:
         return loginUser(request)

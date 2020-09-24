@@ -1,5 +1,5 @@
 from django import forms
-from .models import Port, System, Client, Note
+from .models import Port, System, Client, Note, Server
 
 
 class NoteForm(forms.ModelForm):
@@ -24,6 +24,12 @@ class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ['name', 'link', 'port', 'system', 'version', 'status']
+
+
+class ServerForm(forms.ModelForm):
+    class Meta:
+        model = Server
+        fields = ['name', 'acomServer']
 
 
 class SearchForm(forms.Form):

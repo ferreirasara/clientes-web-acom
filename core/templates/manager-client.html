@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/widgets.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Clientes Web - ACOM</title>
@@ -23,7 +22,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> Gerenciar</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'managerClient' %}"><i class="fa fa-users"></i> Clientes</a>
+                        <a class="dropdown-item active" href="{% url 'managerClient' %}"><i class="fa fa-users"></i> Clientes</a>
                         <a class="dropdown-item" href="{% url 'managerPort' %}"><i class="fa fa-chain"></i> Portas</a>
                         <a class="dropdown-item" href="{% url 'managerServer' %}"><i class="fa fa-server"></i> Servidores</a>
                         <a class="dropdown-item" href="{% url 'managerSystem' %}"><i class="fa fa-cube"></i> Sistemas</a>
@@ -35,55 +34,45 @@
         </div>
     </nav>
     <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-        <div class="container justify-content-center w-50 p-2">
-            <form method="post" class="form" autocomplete="off">{% csrf_token %}
-            <div class="form-group">
-                <label class="col-form-label col-form-label-sm"><b>Nome</b></label>
-                {{ form.name|addclass:"form-control" }}
-            </div>
-            <div class="form-group">
-                <label class="col-form-label col-form-label-sm"><b>Link</b></label>
-                {{ form.link|addclass:"form-control" }}
-            </div>
-            <div class="form-group">
-                <label class="col-form-label col-form-label-sm"><b>Porta</b></label>
-                {{ form.port|addclass:"form-control" }}
-            </div>
-            <div class="form-group">
-                <label class="col-form-label col-form-label-sm"><b>Sistema</b></label>
-                {{ form.system|addclass:"form-control" }}
-            </div>
-            <div class="form-group">
-                <label class="col-form-label col-form-label-sm"><b>Dt. versão</b></label>
-                <div class="input-group">
-                    {{ form.version|addclass:"form-control vDateField" }}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-form-label col-form-label-sm"><b>Status</b></label>
-                {{ form.status|addclass:"form-control" }}
-            </div>
-                <input type="hidden" name="previousPage" value="{{ request.META.HTTP_REFERER }}">
-            <div class="form-group">
-                <button type="submit" class="btn btn-block btn-success mt-2"><i class="fa fa-check"></i> Salvar</button>
-            </div>
-        </form>
+        <h4>
+            <i class="fa fa-users"></i> Clientes
+            <a href="{% url 'newClient' %}" type="button" class="btn btn-sm btn-outline-success text-success"><i class="fa fa-plus"></i></a>
+        </h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-borderless">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Sistema</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Portas</th>
+                        <th scope="col">Servidor</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                        <tr ondblclick="editClient({{ client.id }});">
+                            <td scope="row">{{ client.system.initials }}</td>
+                            <td>{{ client.name }}</td>
+                            {% if client.status == '1' %}
+                                <td class="text-success"><i class="fa fa-check-circle"></i> {{ client.get_status_display }}</td>
+                            {% else %}
+                                <td class="text-danger"><i class="fa fa-close"></i> {{ client.get_status_display }}</td>
+                            {% endif %}
+                            <td>{{ client.port.connector }} - {{ client.port.shutdown }}</td>
+                            <td>{{ client.port.server.name }}</td>
+                            <td class="text-right">
+                                <a href="{% url 'editClient' idClient=client.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                <a href="{% url 'deleteClient' idClient=client.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    <script src="{% static 'js/jsi18n' %}"></script>
-    <script src="{% static 'js/DateTimeShortcuts.js' %}"></script>
-    <script src="{% static 'js/core.js' %}"></script>
-    <script src="{% static 'js/calendar.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

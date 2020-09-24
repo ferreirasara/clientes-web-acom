@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Port, System, Client, Note
+from .models import Port, System, Client, Note, Server
 
 
 class ClientAdmin(admin.ModelAdmin):
@@ -7,7 +7,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 
 class PortAdmin(admin.ModelAdmin):
-    list_display = ('id', 'connector', 'shutdown')
+    list_display = ('id', 'connector', 'shutdown', 'server')
 
 
 class SystemAdmin(admin.ModelAdmin):
@@ -18,7 +18,12 @@ class NoteAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'text')
 
 
+class ServerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'acomServer')
+
+
 admin.site.register(Port, PortAdmin)
 admin.site.register(System, SystemAdmin)
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Note, NoteAdmin)
+admin.site.register(Server, ServerAdmin)

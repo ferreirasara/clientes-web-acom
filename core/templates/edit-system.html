@@ -19,7 +19,15 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 navbar-left">
                 <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{% url 'manager' %}"><i class="fa fa-cogs"></i> Gerenciar</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> Gerenciar</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'managerClient' %}"><i class="fa fa-users"></i> Clientes</a>
+                        <a class="dropdown-item" href="{% url 'managerPort' %}"><i class="fa fa-chain"></i> Portas</a>
+                        <a class="dropdown-item" href="{% url 'managerServer' %}"><i class="fa fa-server"></i> Servidores</a>
+                        <a class="dropdown-item" href="{% url 'managerSystem' %}"><i class="fa fa-cube"></i> Sistemas</a>
+                    </div>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'notes' %}"><i class="fa fa-sticky-note"></i> Anotações</a></li>
             </ul>
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
