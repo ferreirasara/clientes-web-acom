@@ -180,7 +180,7 @@ def managerServer(request):
 def deleteClient(request, idClient):
     if str(request.user) != 'AnonymousUser':
         Client.objects.get(pk=idClient).delete()
-        return redirect('manager')
+        return redirect('managerClient')
     else:
         return loginUser(request)
 
@@ -188,7 +188,7 @@ def deleteClient(request, idClient):
 def deletePort(request, idPort):
     if str(request.user) != 'AnonymousUser':
         Port.objects.get(pk=idPort).delete()
-        return redirect('manager')
+        return redirect('managerPort')
     else:
         return loginUser(request)
 
@@ -196,7 +196,7 @@ def deletePort(request, idPort):
 def deleteSystem(request, idSystem):
     if str(request.user) != 'AnonymousUser':
         System.objects.get(pk=idSystem).delete()
-        return redirect('manager')
+        return redirect('managerSystem')
     else:
         return loginUser(request)
 
@@ -204,7 +204,7 @@ def deleteSystem(request, idSystem):
 def deleteServer(request, idServer):
     if str(request.user) != 'AnonymousUser':
         Server.objects.get(pk=idServer).delete()
-        return redirect('manager')
+        return redirect('managerServer')
     else:
         return loginUser(request)
 
@@ -273,7 +273,7 @@ def newClient(request):
                 port = get_object_or_404(Port, id=client.port_id)
                 port.status = 2
                 port.save()
-                return redirect('manager')
+                return redirect('managerClient')
             else:
                 return render(request, 'edit-client.html', {'form': ClientForm()})
         else:
@@ -288,7 +288,7 @@ def newPort(request):
             form = PortForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('manager')
+                return redirect('managerPort')
             else:
                 return render(request, 'edit-port.html', {'form': PortForm()})
         else:
@@ -303,7 +303,7 @@ def newSystem(request):
             form = SystemForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('manager')
+                return redirect('managerSystem')
             else:
                 return render(request, 'edit-system.html', {'form': SystemForm()})
         else:
@@ -311,13 +311,14 @@ def newSystem(request):
     else:
         return loginUser(request)
 
+
 def newServer(request):
     if str(request.user) != 'AnonymousUser':
         if str(request.method) == 'POST':
             form = ServerForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('manager')
+                return redirect('managerServer')
             else:
                 return render(request, 'edit-server.html', {'form': ServerForm()})
         else:
