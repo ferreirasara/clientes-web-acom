@@ -55,7 +55,7 @@ class Client(models.Model):
     )
     name = models.CharField('Name', max_length=100)
     link = models.CharField('Link', max_length=100)
-    port = models.ForeignKey(Port, on_delete=models.CASCADE, limit_choices_to={'status': 1})
+    port = models.ForeignKey(Port, on_delete=models.CASCADE)
     system = models.ForeignKey(System, on_delete=models.CASCADE, default=1)
     version = models.DateField('Version')
     status = models.CharField('Status', choices=STATUS, max_length=1, default='1')
