@@ -11,7 +11,7 @@ class NoteForm(forms.ModelForm):
 class PortForm(forms.ModelForm):
     class Meta:
         model = Port
-        fields = ['connector', 'shutdown', 'status']
+        fields = ['connector', 'shutdown', 'server', 'status']
 
 
 class SystemForm(forms.ModelForm):

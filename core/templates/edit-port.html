@@ -55,8 +55,12 @@
                     {{ form.shutdown|addclass:"form-control" }}
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label col-form-label-sm"><b>Shutdown</b></label>
+                    <label class="col-form-label col-form-label-sm"><b>Status</b></label>
                     {{ form.status|addclass:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"><b>Servidor</b></label>
+                    {{ form.server|addclass:"form-control" }}
                 </div>
                     <input type="hidden" name="previousPage" value="{{ request.META.HTTP_REFERER }}">
                 <button type="submit" class="btn btn-block btn-success mt-2"><i class="fa fa-check"></i> Salvar</button>
