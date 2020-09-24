@@ -45,6 +45,7 @@
                         <th scope="col">Connector</th>
                         <th scope="col">Shutdown</th>
                         <th scope="row">Status</th>
+                        <th scope="row">Servidor</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -58,6 +59,7 @@
                             {% else %}
                                 <td class="text-danger"><i class="fa fa-ban"></i> {{ port.get_status_display }}</td>
                             {% endif %}
+                            <td>{{ port.server }}</td>
                             <td class="text-right">
                                 <a href="{% url 'editPort' idPort=port.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
                                 <a href="{% url 'deletePort' idPort=port.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
