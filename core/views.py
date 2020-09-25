@@ -113,30 +113,6 @@ def update(request):
         return loginUser(request)
 
 
-def verifyClients(request):
-    clients = Client.objects.filter(status=1)
-    clientsWithError = []
-    for client in clients:
-        try:
-            r = requests.get(client.link)
-            if (r.text.find('<html>')) == -1:
-                clientsWithError.append(client)
-        except:
-            clientsWithError.append(client)
-    if len(clientsWithError) == 0:
-        storage = messages.get_messages(request)
-        storage.used = True
-        messages.add_message(request, messages.SUCCESS, 'Todos os links estão funcionando.')
-    else:
-        text = 'Alguns links não estão funcionando: '
-        for client in clientsWithError:
-            text += '[' + client.system.initials + '_' + client.name + '] '
-        storage = messages.get_messages(request)
-        storage.used = True
-        messages.add_message(request, messages.ERROR, text)
-    return redirect('index')
-
-
 def managerClient(request):
     if str(request.user) != 'AnonymousUser':
         context = {
