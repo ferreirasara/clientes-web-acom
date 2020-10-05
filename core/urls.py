@@ -4,6 +4,7 @@ from .views import managerClient, managerPort, managerSystem, managerServer
 from .views import newNote, newPort, newClient, newSystem, newServer
 from .views import editNote, editPort, editClient, editSystem, editServer
 from .views import deleteNote, deletePort, deleteClient, deleteSystem, deleteServer
+from .views import viewNote
 
 
 urlpatterns = [
@@ -34,6 +35,7 @@ urlpatterns = [
 
     path('notes', notes, name='notes'),
     path('notes/new', newNote, name='newNote'),
+    path('notes/<int:idNote>', viewNote, name='viewNote'),
     path('notes/edit/<int:idNote>', editNote, name='editNote'),
     path('notes/delete/<int:idNote>', deleteNote, name='deleteNote'),
 ]

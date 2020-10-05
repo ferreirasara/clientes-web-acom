@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    {{ form.media }}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -33,34 +34,25 @@
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
     </nav>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <div class="container">
-        <div class="row justify-content-sm-between mt-2 mb-2">
-            <div class="col-auto"><a class="btn btn-sm btn-primary" href="{% url 'newNote' %}"><i class="fa fa-plus"></i> Nova Anotação</a></div>
-        </div>
-        <div class="row row-cols-1 row-cols-md-4">
-            {% for note in notes %}
-                <div class="col mb-2">
-                    <div class="card">
-                        <div class="card-body" ondblclick="viewNote({{ note.id }});">
-                            <div class="row justify-content-sm-between">
-                                <div class="col-auto">
-                                    <h5 class="card-title "><a class="text-dark" href="{% url 'viewNote' idNote=note.id %}">{{ note.title }}</a></h5>
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{% url 'editNote' idNote=note.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                    <a href="{% url 'deleteNote' idNote=note.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
-                                </div>
-                            </div>
-                            <p>{{ note.text|linebreaksbr|truncatewords:5 }}</p>
-                        </div>
-                    </div>
+        <div class="container justify-content-center w-70 p-2">
+            <div class="row justify-content-sm-between">
+                <div class="col-auto">
+                    <h1 class="card-title ">{{ note.title }}</h1>
                 </div>
-            {% endfor %}
+                <div class="col-auto">
+                    <h3>
+                        <a href="{% url 'editNote' idNote=note.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                        <a href="{% url 'deleteNote' idNote=note.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                    </h3>
+                </div>
+            </div>
+            {{ note.text|safe|linebreaksbr }}
         </div>
     </div>
-    <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>
 </html>

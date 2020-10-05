@@ -61,6 +61,13 @@ def notes(request):
         return loginUser(request)
 
 
+def viewNote(request, idNote):
+    if str(request.user) != 'AnonymousUser':
+        note = get_object_or_404(Note, id=idNote)
+        return render(request, 'view-note.html', {'note': note})
+    else:
+        return loginUser(request)
+
 def newNote(request):
     if str(request.user) != 'AnonymousUser':
         if str(request.method) == 'POST':
