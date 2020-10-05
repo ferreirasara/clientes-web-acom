@@ -53,7 +53,7 @@
                                     <a href="{% url 'deleteNote' idNote=note.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
                                 </div>
                             </div>
-                            <p>{{ note.text|linebreaksbr|truncatewords:5 }}</p>
+                            <p>{{ note.text|truncatechars:50 }}</p>
                         </div>
                     </div>
                 </div>
