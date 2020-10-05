@@ -39,25 +39,28 @@
         <div class="row justify-content-sm-between mt-2 mb-2">
             <div class="col-auto"><a class="btn btn-sm btn-primary" href="{% url 'newNote' %}"><i class="fa fa-plus"></i> Nova Anotação</a></div>
         </div>
-        <div class="row row-cols-1 row-cols-md-4">
-            {% for note in notes %}
-                <div class="col mb-2">
-                    <div class="card">
-                        <div class="card-body" ondblclick="viewNote({{ note.id }});">
-                            <div class="row justify-content-sm-between">
-                                <div class="col-auto">
-                                    <h5 class="card-title "><a class="text-dark" href="{% url 'viewNote' idNote=note.id %}">{{ note.title }}</a></h5>
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{% url 'editNote' idNote=note.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
-                                    <a href="{% url 'deleteNote' idNote=note.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
-                                </div>
-                            </div>
-                            <p>{{ note.text|truncatechars:50 }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-borderless">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Título</th>
+                        <th scope="col">Texto</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in notes %}
+                        <tr ondblclick="viewNote({{ note.id }});">
+                            <td>{{ note.title }}</td>
+                            <td>{{ note.text|truncatechars:120 }}</td>
+                            <td class="text-right">
+                                <a href="{% url 'editNote' idNote=note.id %}" class="text-primary"><i class="fa fa-pencil fa-lg"></i></a>
+                                <a href="{% url 'deleteNote' idNote=note.id %}" class="text-danger"><i class="fa fa-remove fa-lg"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <script src="{% static 'js/script.js' %}"></script>
