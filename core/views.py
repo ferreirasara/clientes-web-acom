@@ -68,13 +68,14 @@ def viewNote(request, idNote):
     else:
         return loginUser(request)
 
+
 def newNote(request):
     if str(request.user) != 'AnonymousUser':
         if str(request.method) == 'POST':
             form = NoteForm(request.POST)
             if form.is_valid():
-                form.save()
-                return redirect('notes')
+                note = form.save()
+                return render(request, 'view-note.html', {'note': note})
             else:
                 return render(request, 'edit-note.html', {'form': form})
         else:
@@ -89,7 +90,7 @@ def editNote(request, idNote):
         form = NoteForm(request.POST or None, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('notes')
+            return render(request, 'view-note.html', {'note': instance})
         return render(request, 'edit-note.html', {'form': form})
     else:
         return loginUser(request)
