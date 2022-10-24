@@ -30,9 +30,25 @@
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'notes' %}"><i class="fa fa-sticky-note"></i> Anotações</a></li>
             </ul>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 navbar-rigth">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/ferreirasara/" target="_blank" rel="noreferrer"><i class="fa fa-info"></i> Feito por Sara Ferreira</a>
+                </li>
+            </ul>
             <a href="{% url 'logout' %}" type="button" class="btn btn-outline-light"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
     </nav>
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>
+            Essa aplicação foi hospedada gratuitamente na plataforma Heroku.
+            Entretanto, essa plataforma deixará de ser gratuita em 28 de novembro de 2022 (Saiba mais <a href="https://blog.heroku.com/next-chapter" class="alert-link" target="_blank" rel="noreferrer">aqui</a>).
+            Portanto, essa aplicação deixará de funcionar a partir desse dia.
+            <br/>Caso tenha interesse, entre em contato pelo email <a class="alert-link" href="mailto:ferreirasara1501@gmail.com">ferreirasara1501@gmail.com</a> para mais detalhes e ter acesso ao backup da base de dados.
+        </p>
+    </div>
     <div class="container">
         <h4>
             <i class="fa fa-cube"></i> Sistemas
